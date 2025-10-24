@@ -1,6 +1,9 @@
+import { Console } from "@woowacourse/mission-utils";
+
 import { validatedInput } from "./utils/input/input.js";
 import { getValidNames } from "./utils/input/name.js";
 import { getValidCount } from "./utils/input/count.js";
+import { generateCars } from "./utils/racing/generateCars.js";
 
 class App {
   async run() {
@@ -11,6 +14,9 @@ class App {
 
     const countString = await validatedInput("시도할 횟수는 몇 회인가요?");
     const validCount = getValidCount(countString);
+
+    const cars = generateCars(validNames);
+    Console.print(cars);
   }
 }
 
