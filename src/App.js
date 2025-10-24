@@ -1,9 +1,8 @@
-import { Console } from "@woowacourse/mission-utils";
-
 import { validatedInput } from "./utils/input/input.js";
 import { getValidNames } from "./utils/input/name.js";
 import { getValidCount } from "./utils/input/count.js";
 import { generateCars } from "./utils/racing/generateCars.js";
+import { racing } from "./utils/racing/racing.js";
 
 class App {
   async run() {
@@ -16,7 +15,9 @@ class App {
     const validCount = getValidCount(countString);
 
     const cars = generateCars(validNames);
-    Console.print(cars);
+    for (let i = 0; i < validCount; i++) {
+      racing(cars);
+    }
   }
 }
 
