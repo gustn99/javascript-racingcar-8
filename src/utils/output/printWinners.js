@@ -1,5 +1,7 @@
 import { output } from "./output.js";
 
+const JOIN_DELIMITER = ", ";
+
 export const printWinners = (cars) => {
   const winners = formatWinners(cars);
   output();
@@ -9,7 +11,7 @@ export const printWinners = (cars) => {
 const formatWinners = (cars) => {
   const maxResult = getMaxResult(cars);
   const winners = getWinners(cars, maxResult);
-  return winners.join(", ");
+  return winners.join(JOIN_DELIMITER);
 };
 
 const getMaxResult = (cars) => {

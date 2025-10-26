@@ -1,5 +1,8 @@
 import { Random } from "@woowacourse/mission-utils";
 
+const THRESHOLD = 4;
+const MOVE_STEP = 1;
+
 export const racing = (cars) => {
   Object.values(cars).forEach((results) => {
     const movedLocation = moveCar(results);
@@ -11,8 +14,8 @@ const moveCar = (results) => {
   const randomNumber = getRandomNumber();
 
   let movedLocation = results.at(-1) ?? 0;
-  if (randomNumber >= 4) {
-    movedLocation += 1;
+  if (randomNumber >= THRESHOLD) {
+    movedLocation += MOVE_STEP;
   }
 
   return movedLocation;

@@ -3,6 +3,8 @@ import { NAME_ERROR_MESSAGES } from "../../constants/errorMessages.js";
 
 import { validatedInput } from "./input.js";
 
+const SPLIT_DELIMITER = ",";
+
 export const nameInput = async () => {
   const nameString = await validatedInput(INPUT_MESSAGES.name);
   const validNames = getValidNames(nameString);
@@ -16,7 +18,7 @@ const getValidNames = (nameString) => {
 };
 
 const parseName = (nameString) => {
-  const parsedName = nameString.split(",");
+  const parsedName = nameString.split(SPLIT_DELIMITER);
   return parsedName;
 };
 
