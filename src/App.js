@@ -4,6 +4,7 @@ import { getValidCount } from "./utils/input/count.js";
 import { generateCars } from "./utils/racing/generateCars.js";
 import { racing } from "./utils/racing/racing.js";
 import { printResultByRound } from "./utils/output/printResultByRound.js";
+import { printWinners } from "./utils/output/printWinners.js";
 
 class App {
   async run() {
@@ -20,6 +21,8 @@ class App {
       racing(cars);
       printResultByRound(cars);
     }
+
+    printWinners(cars);
   }
 }
 
