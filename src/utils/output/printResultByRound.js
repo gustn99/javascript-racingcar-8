@@ -9,7 +9,7 @@ export const printResultByRound = (cars) => {
   output(resultByRound);
 };
 
-const formatResultByCar = (cars) => {
+export const formatResultByCar = (cars) => {
   const resultByCar = Object.entries(cars).map(
     ([name, result]) => `${name} : ${DISTANCE_MARKER.repeat(result.at(-1))}`
   );

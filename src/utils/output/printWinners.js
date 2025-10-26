@@ -14,13 +14,13 @@ const formatWinners = (cars) => {
   return winners.join(JOIN_DELIMITER);
 };
 
-const getMaxResult = (cars) => {
+export const getMaxResult = (cars) => {
   const lastResults = Object.values(cars).map((results) => results.at(-1));
   const maxResult = Math.max(...lastResults);
   return maxResult;
 };
 
-const getWinners = (cars, maxResult) => {
+export const getWinners = (cars, maxResult) => {
   const winners = Object.entries(cars)
     .filter(([_name, results]) => results.at(-1) === maxResult)
     .map((w) => w[0]);
