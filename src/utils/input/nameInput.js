@@ -1,9 +1,8 @@
+import { INPUT_MESSAGES } from "../../constants/inputMessages.js";
 import { validatedInput } from "./input.js";
 
 export const nameInput = async () => {
-  const nameString = await validatedInput(
-    "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)"
-  );
+  const nameString = await validatedInput(INPUT_MESSAGES.name);
   const validNames = getValidNames(nameString);
   return validNames;
 };

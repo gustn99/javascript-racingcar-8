@@ -1,7 +1,8 @@
+import { INPUT_MESSAGES } from "../../constants/inputMessages.js";
 import { validatedInput } from "./input.js";
 
 export const roundInput = async () => {
-  const roundString = await validatedInput("시도할 횟수는 몇 회인가요?");
+  const roundString = await validatedInput(INPUT_MESSAGES.round);
   const validRound = getValidRound(roundString);
   return validRound;
 };
