@@ -1,15 +1,25 @@
-export const getValidNames = (nameString) => {
+import { validatedInput } from "./input.js";
+
+export const nameInput = async () => {
+  const nameString = await validatedInput(
+    "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)"
+  );
+  const validNames = getValidNames(nameString);
+  return validNames;
+};
+
+const getValidNames = (nameString) => {
   const nameArray = parseName(nameString);
   validateName(nameArray);
   return nameArray;
 };
 
-export const parseName = (nameString) => {
+const parseName = (nameString) => {
   const parsedName = nameString.split(",");
   return parsedName;
 };
 
-export const validateName = (nameArray) => {
+const validateName = (nameArray) => {
   if (nameArray.length > new Set([...nameArray]).size) {
     throw new Error("[ERROR] 자동차 이름은 중복될 수 없습니다.");
   }
