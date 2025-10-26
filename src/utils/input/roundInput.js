@@ -14,7 +14,7 @@ const getValidRound = (roundString) => {
   return Number(roundString);
 };
 
-const validateRound = (roundString) => {
+export const validateRound = (roundString) => {
   if (isNaN(roundString)) {
     throw new Error(ROUND_ERROR_MESSAGES.number);
   }

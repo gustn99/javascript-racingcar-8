@@ -22,7 +22,7 @@ const parseName = (nameString) => {
   return parsedName;
 };
 
-const validateName = (nameArray) => {
+export const validateName = (nameArray) => {
   const uniqueNameArray = new Set([...nameArray]);
   if (nameArray.length > uniqueNameArray.size) {
     throw new Error(NAME_ERROR_MESSAGES.duplicate);
