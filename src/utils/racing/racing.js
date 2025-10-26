@@ -10,7 +10,7 @@ export const racing = (cars) => {
   });
 };
 
-const moveCar = (results) => {
+export const moveCar = (results) => {
   const randomNumber = getRandomNumber();
 
   let movedLocation = results.at(-1) ?? 0;
