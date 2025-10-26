@@ -1,6 +1,6 @@
 import { validatedInput } from "./utils/input/input.js";
 import { getValidNames } from "./utils/input/name.js";
-import { getValidCount } from "./utils/input/count.js";
+import { getValidRound } from "./utils/input/round.js";
 import { generateCars } from "./utils/racing/generateCars.js";
 import { racing } from "./utils/racing/racing.js";
 import { printResultByRound } from "./utils/output/printResultByRound.js";
@@ -13,11 +13,11 @@ class App {
     );
     const validNames = getValidNames(nameString);
 
-    const countString = await validatedInput("시도할 횟수는 몇 회인가요?");
-    const validCount = getValidCount(countString);
+    const roundString = await validatedInput("시도할 횟수는 몇 회인가요?");
+    const validRound = getValidRound(roundString);
 
     const cars = generateCars(validNames);
-    for (let i = 0; i < validCount; i++) {
+    for (let i = 0; i < validRound; i++) {
       racing(cars);
       printResultByRound(cars);
     }
