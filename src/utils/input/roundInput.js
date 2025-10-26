@@ -1,4 +1,6 @@
 import { INPUT_MESSAGES } from "../../constants/inputMessages.js";
+import { ROUND_ERROR_MESSAGES } from "../../constants/errorMessages.js";
+
 import { validatedInput } from "./input.js";
 
 export const roundInput = async () => {
@@ -14,10 +16,10 @@ const getValidRound = (roundString) => {
 
 const validateRound = (roundString) => {
   if (isNaN(roundString)) {
-    throw new Error("[ERROR] 숫자만 입력해 주세요.");
+    throw new Error(ROUND_ERROR_MESSAGES.number);
   }
 
   if (Number(roundString) <= 0) {
-    throw new Error("[ERROR] 양수만 입력 가능합니다.");
+    throw new Error(ROUND_ERROR_MESSAGES.positive);
   }
 };

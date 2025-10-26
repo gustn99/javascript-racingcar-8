@@ -1,4 +1,6 @@
 import { INPUT_MESSAGES } from "../../constants/inputMessages.js";
+import { NAME_ERROR_MESSAGES } from "../../constants/errorMessages.js";
+
 import { validatedInput } from "./input.js";
 
 export const nameInput = async () => {
@@ -19,21 +21,18 @@ const parseName = (nameString) => {
 };
 
 const validateName = (nameArray) => {
-  if (nameArray.length > new Set([...nameArray]).size) {
-    throw new Error("[ERROR] 자동차 이름은 중복될 수 없습니다.");
+  const uniqueNameArray = new Set([...nameArray]);
+  if (nameArray.length > uniqueNameArray.size) {
+    throw new Error(NAME_ERROR_MESSAGES.duplicate);
   }
 
   nameArray.forEach((name) => {
     if (name.trim() === "") {
-      throw new Error(
-        "[ERROR] 자동차 이름은 하나 이상의 숫자 또는 문자여야 합니다."
-      );
+      throw new Error(NAME_ERROR_MESSAGES.minLength);
     }
 
     if (name.length > 5) {
-      throw new Error(
-        "[ERROR] 자동차 이름은 5글자 이내의 숫자 또는 문자여야 합니다."
-      );
+      throw new Error(NAME_ERROR_MESSAGES.maxLength);
     }
   });
 };
