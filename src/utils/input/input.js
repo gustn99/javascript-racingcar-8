@@ -8,7 +8,7 @@ export const validatedInput = async (question) => {
   return userInput;
 };
 
-export const input = async (question) => {
+const input = async (question) => {
   const userInput = await Console.readLineAsync(`${question}\n`);
   return userInput;
 };
