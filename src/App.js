@@ -11,8 +11,8 @@ class App {
   async run() {
     const names = await nameInput();
     const round = await roundInput();
-    const cars = generateCars(names);
 
+    const cars = generateCars(names);
     for (let i = 0; i < round; i++) {
       racing(cars);
       printResultByRound(cars);
