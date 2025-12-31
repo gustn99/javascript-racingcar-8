@@ -11,16 +11,31 @@ class App {
     this.validateNameList(nameList);
     const count = Number(countInput);
     this.validateCount(count);
+
+    const cars = nameList.map((name) => new Car(name));
+
+    Console.print('');
+    Console.print('실행 결과');
+    for (let i = 0; i < count; i++) {
+      cars.forEach((car) => {
+        car.move();
+        car.printCurrentPosition();
+      });
+      Console.print('');
+    }
+
+    const winners = this.calculateWinners(cars);
+    Console.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 
   parseNameList(namesInput) {
     const nameList = namesInput.split(',').map((name) => name.trim());
-    nameList.forEach(validateNonempty);
+    nameList.forEach(this.validateNonempty);
     return nameList;
   }
 
   validateNonempty(value) {
-    if (value.trim() === '') {
+    if (!value || value.trim() === '') {
       throw new Error('[ERROR] 값을 입력해 주세요.');
     }
   }
@@ -36,6 +51,41 @@ class App {
     if (count <= 0 || !Number.isInteger(count)) {
       throw new Error('[ERROR] 횟수는 자연수만 입력 가능합니다.');
     }
+  }
+
+  calculateWinners(cars) {
+    const positions = cars.map(car => car.getPosition());
+    const maxPosition = Math.max(...positions);
+
+    const winners = cars.filter((car) => car.getPosition() === maxPosition).map((car) => car.getName());
+    return winners;
+  }
+}
+
+class Car {
+  #name;
+  #position;
+
+  constructor(name) {
+    this.#name = name;
+    this.#position = 0;
+  }
+
+  move() {
+    // TODO: 랜덤 넘버 -> MOVING_FORWARD/STOP 결정
+    this.#position += 1;
+  }
+
+  printCurrentPosition() {
+    Console.print(`${this.#name} : ${'-'.repeat(this.#position)}`);
+  }
+
+  getName() {
+    return this.#name;
+  }
+
+  getPosition() {
+    return this.#position;
   }
 }
 
