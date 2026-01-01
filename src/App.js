@@ -11,12 +11,10 @@ class App {
   }
 
   async run() {
-    const namesInput = await this.inputView.readWithNonemptyValidation('경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n');
-    const nameList = this.parseNameList(namesInput);
+    const nameList = await this.inputView.readNameList();
     this.validateNameList(nameList);
 
-    const countInput = await this.inputView.readWithNonemptyValidation('시도할 횟수는 몇회인가요?\n');
-    const count = Number(countInput);
+    const count = await this.inputView.readCount();
     this.validateCount(count);
 
     const cars = nameList.map((name) => new Car(name));
@@ -34,13 +32,9 @@ class App {
     this.outputView.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 
-  parseNameList(namesInput) {
-    const nameList = namesInput.split(',').map((name) => name.trim());
-    nameList.forEach(Validator.validateNonempty);
-    return nameList;
-  }
-
   validateNameList(nameList) {
+    nameList.forEach(Validator.validateNonempty);
+
     const nameSet = new Set(nameList);
     if (nameList.length !== nameSet.size) {
       throw new Error('[ERROR] 중복 이름이 포함되어 있습니다.');
