@@ -11,8 +11,6 @@ class App {
 
   async run() {
     const nameList = await this.inputView.readNameList();
-    this.validateNameList(nameList);
-
     const count = await this.inputView.readCount();
     this.validateCount(count);
 
@@ -28,13 +26,6 @@ class App {
 
     const winners = game.calculateWinners();
     this.outputView.printWinners(winners);
-  }
-
-  validateNameList(nameList) {
-    const nameSet = new Set(nameList);
-    if (nameList.length !== nameSet.size) {
-      throw new Error('[ERROR] 중복 이름이 포함되어 있습니다.');
-    }
   }
 
   validateCount(count) {

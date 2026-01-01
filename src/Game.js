@@ -2,7 +2,16 @@ class Game {
   #cars;
 
   constructor(cars) {
+    this.validate(cars);
     this.#cars = cars;
+  }
+
+  validate(cars) {
+    const names = cars.map(car => car.getName());
+    const nameSet = new Set(names);
+    if (names.length !== nameSet.size) {
+      throw new Error('[ERROR] 중복 이름이 포함되어 있습니다.');
+    }
   }
 
   playOneRound() {
