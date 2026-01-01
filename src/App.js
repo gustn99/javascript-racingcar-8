@@ -4,27 +4,25 @@ class App {
   async run() {
     const namesInput = await Console.readLineAsync('경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n');
     this.validateNonempty(namesInput);
-    const countInput = await Console.readLineAsync('시도할 횟수는 몇회인가요?\n');
-    this.validateNonempty(countInput);
-
     const nameList = this.parseNameList(namesInput);
     this.validateNameList(nameList);
+
+    const countInput = await Console.readLineAsync('시도할 횟수는 몇회인가요?\n');
+    this.validateNonempty(countInput);
     const count = Number(countInput);
     this.validateCount(count);
 
     const cars = nameList.map((name) => new Car(name));
+    const game = new Game(cars);
 
     Console.print('');
     Console.print('실행 결과');
     for (let i = 0; i < count; i++) {
-      cars.forEach((car) => {
-        car.move();
-        car.printCurrentPosition();
-      });
-      Console.print('');
+      game.playOneRound();
+      game.printLastRound();
     }
 
-    const winners = this.calculateWinners(cars);
+    const winners = game.calculateWinners(cars);
     Console.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 
@@ -51,6 +49,27 @@ class App {
     if (count <= 0 || !Number.isInteger(count)) {
       throw new Error('[ERROR] 횟수는 자연수만 입력 가능합니다.');
     }
+  }
+}
+
+class Game {
+  #cars;
+
+  constructor(cars) {
+    this.#cars = cars;
+  }
+
+  playOneRound() {
+    this.#cars.forEach((car) => {
+      car.move();
+    });
+  }
+
+  printLastRound() {
+    this.#cars.forEach((car) => {
+      car.printCurrentPosition();
+    });
+    Console.print('');
   }
 
   calculateWinners(cars) {
