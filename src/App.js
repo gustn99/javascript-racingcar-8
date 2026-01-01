@@ -17,15 +17,18 @@ class App {
     const cars = nameList.map((name) => new Car(name));
     const game = new Game(cars);
 
+    this.runGame(game);
+    const winners = game.calculateWinners();
+    this.outputView.printWinners(winners);
+  }
+
+  runGame(game) {
     this.outputView.print('');
     this.outputView.print('실행 결과');
     for (let i = 0; i < count; i++) {
       game.playOneRound();
       this.outputView.printResultByRound(game.getPositionsByCar());
     }
-
-    const winners = game.calculateWinners();
-    this.outputView.printWinners(winners);
   }
 
   validateCount(count) {
