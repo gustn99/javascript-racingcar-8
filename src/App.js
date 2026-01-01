@@ -1,4 +1,4 @@
-import { Console } from '@woowacourse/mission-utils';
+import { Console, Random } from '@woowacourse/mission-utils';
 
 class App {
   constructor() {
@@ -116,8 +116,14 @@ class Car {
   }
 
   move() {
-    // TODO: 랜덤 넘버 -> MOVING_FORWARD/STOP 결정
-    this.#position += 1;
+    const num = Random.pickNumberInRange(0, 9);
+    this.movingForwardOrStop(num);
+  }
+
+  movingForwardOrStop(num) {
+    if (num >= 4) {
+      this.#position += 1;
+    }
   }
 
   formatPosition() {
