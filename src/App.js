@@ -1,6 +1,5 @@
 import InputView from './views/InputView.js';
 import OutputView from './views/OutputView.js';
-import Validator from './utils/Validator.js';
 import Car from './Car.js';
 import Game from './Game.js';
 
@@ -32,8 +31,6 @@ class App {
   }
 
   validateNameList(nameList) {
-    nameList.forEach(Validator.validateNonempty);
-
     const nameSet = new Set(nameList);
     if (nameList.length !== nameSet.size) {
       throw new Error('[ERROR] 중복 이름이 포함되어 있습니다.');
