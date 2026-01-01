@@ -1,41 +1,39 @@
 import { Console } from '@woowacourse/mission-utils';
 
 class App {
+  constructor() {
+    this.inputView = new InputView();
+    this.outputView = new OutputView();
+  }
+
   async run() {
-    const namesInput = await Console.readLineAsync('경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n');
-    this.validateNonempty(namesInput);
+    const namesInput = await this.inputView.readWithNonemptyValidation('경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n');
     const nameList = this.parseNameList(namesInput);
     this.validateNameList(nameList);
 
-    const countInput = await Console.readLineAsync('시도할 횟수는 몇회인가요?\n');
-    this.validateNonempty(countInput);
+    const countInput = await this.inputView.readWithNonemptyValidation('시도할 횟수는 몇회인가요?\n');
     const count = Number(countInput);
     this.validateCount(count);
 
     const cars = nameList.map((name) => new Car(name));
     const game = new Game(cars);
 
-    Console.print('');
-    Console.print('실행 결과');
+    this.outputView.print('');
+    this.outputView.print('실행 결과');
     for (let i = 0; i < count; i++) {
       game.playOneRound();
-      game.printLastRound();
+      this.outputView.print(game.formatPositionsByCar());
+      this.outputView.print('');
     }
 
     const winners = game.calculateWinners(cars);
-    Console.print(`최종 우승자 : ${winners.join(', ')}`);
+    this.outputView.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 
   parseNameList(namesInput) {
     const nameList = namesInput.split(',').map((name) => name.trim());
-    nameList.forEach(this.validateNonempty);
+    nameList.forEach(Validator.validateNonempty);
     return nameList;
-  }
-
-  validateNonempty(value) {
-    if (!value || value.trim() === '') {
-      throw new Error('[ERROR] 값을 입력해 주세요.');
-    }
   }
 
   validateNameList(nameList) {
@@ -52,6 +50,32 @@ class App {
   }
 }
 
+class Validator {
+  static validateNonempty(value) {
+    if (!value || value.trim() === '') {
+      throw new Error('[ERROR] 값을 입력해 주세요.');
+    }
+  }
+}
+
+class InputView {
+  async read(question) {
+    return await Console.readLineAsync(question);
+  }
+
+  async readWithNonemptyValidation(question) {
+    const input = await this.read(question);
+    Validator.validateNonempty(input);
+    return input;
+  }
+}
+
+class OutputView {
+  print(value = '') {
+    Console.print(value);
+  }
+}
+
 class Game {
   #cars;
 
@@ -65,11 +89,12 @@ class Game {
     });
   }
 
-  printLastRound() {
+  formatPositionsByCar() {
+    const positions = [];
     this.#cars.forEach((car) => {
-      car.printCurrentPosition();
+      positions.push(car.formatPosition());
     });
-    Console.print('');
+    return positions.join('\n');
   }
 
   calculateWinners(cars) {
@@ -95,8 +120,8 @@ class Car {
     this.#position += 1;
   }
 
-  printCurrentPosition() {
-    Console.print(`${this.#name} : ${'-'.repeat(this.#position)}`);
+  formatPosition() {
+    return `${this.#name} : ${'-'.repeat(this.#position)}`;
   }
 
   getName() {
