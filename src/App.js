@@ -1,4 +1,8 @@
-import { Console, Random } from '@woowacourse/mission-utils';
+import InputView from './views/InputView.js';
+import OutputView from './views/OutputView.js';
+import Validator from './utils/Validator.js';
+import Car from './Car.js';
+import Game from './Game.js';
 
 class App {
   constructor() {
@@ -26,7 +30,7 @@ class App {
       this.outputView.print('');
     }
 
-    const winners = game.calculateWinners(cars);
+    const winners = game.calculateWinners();
     this.outputView.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 
@@ -47,95 +51,6 @@ class App {
     if (count <= 0 || !Number.isInteger(count)) {
       throw new Error('[ERROR] 횟수는 자연수만 입력 가능합니다.');
     }
-  }
-}
-
-class Validator {
-  static validateNonempty(value) {
-    if (!value || value.trim() === '') {
-      throw new Error('[ERROR] 값을 입력해 주세요.');
-    }
-  }
-}
-
-class InputView {
-  async read(question) {
-    return await Console.readLineAsync(question);
-  }
-
-  async readWithNonemptyValidation(question) {
-    const input = await this.read(question);
-    Validator.validateNonempty(input);
-    return input;
-  }
-}
-
-class OutputView {
-  print(value = '') {
-    Console.print(value);
-  }
-}
-
-class Game {
-  #cars;
-
-  constructor(cars) {
-    this.#cars = cars;
-  }
-
-  playOneRound() {
-    this.#cars.forEach((car) => {
-      car.move();
-    });
-  }
-
-  formatPositionsByCar() {
-    const positions = [];
-    this.#cars.forEach((car) => {
-      positions.push(car.formatPosition());
-    });
-    return positions.join('\n');
-  }
-
-  calculateWinners(cars) {
-    const positions = cars.map(car => car.getPosition());
-    const maxPosition = Math.max(...positions);
-
-    const winners = cars.filter((car) => car.getPosition() === maxPosition).map((car) => car.getName());
-    return winners;
-  }
-}
-
-class Car {
-  #name;
-  #position;
-
-  constructor(name) {
-    this.#name = name;
-    this.#position = 0;
-  }
-
-  move() {
-    const num = Random.pickNumberInRange(0, 9);
-    this.movingForwardOrStop(num);
-  }
-
-  movingForwardOrStop(num) {
-    if (num >= 4) {
-      this.#position += 1;
-    }
-  }
-
-  formatPosition() {
-    return `${this.#name} : ${'-'.repeat(this.#position)}`;
-  }
-
-  getName() {
-    return this.#name;
-  }
-
-  getPosition() {
-    return this.#position;
   }
 }
 
