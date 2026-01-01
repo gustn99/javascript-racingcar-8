@@ -20,10 +20,6 @@ class Car {
     }
   }
 
-  formatPosition() {
-    return `${this.#name} : ${'-'.repeat(this.#position)}`;
-  }
-
   getName() {
     return this.#name;
   }

@@ -11,12 +11,8 @@ class Game {
     });
   }
 
-  formatPositionsByCar() {
-    const positions = [];
-    this.#cars.forEach((car) => {
-      positions.push(car.formatPosition());
-    });
-    return positions.join('\n');
+  getPositionsByCar() {
+    return this.#cars.map((car) => ({ name: car.getName(), position: car.getPosition() }));
   }
 
   calculateWinners() {

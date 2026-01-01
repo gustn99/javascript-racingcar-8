@@ -24,12 +24,11 @@ class App {
     this.outputView.print('실행 결과');
     for (let i = 0; i < count; i++) {
       game.playOneRound();
-      this.outputView.print(game.formatPositionsByCar());
-      this.outputView.print('');
+      this.outputView.printResultByRound(game.getPositionsByCar());
     }
 
     const winners = game.calculateWinners();
-    this.outputView.print(`최종 우승자 : ${winners.join(', ')}`);
+    this.outputView.printWinners(winners);
   }
 
   validateNameList(nameList) {
